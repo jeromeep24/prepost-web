@@ -1,0 +1,19 @@
+{
+  "semana": "Semana 16-22F",
+  "peliculas": [
+    {
+      "dia": "Martes 17",
+      "hora": "22.00h",
+      "titulo": "Cure (1997)",
+      "nota": "[enlace el mismo día]",
+      "enlace": ""
+    },
+    {
+      "dia": "Domingo 22",
+      "hora": "22.00h",
+      "titulo": "Sambizanga (1976)",
+      "nota": "[enlace el mismo día]",
+      "enlace": ""
+    }
+  ]
+}

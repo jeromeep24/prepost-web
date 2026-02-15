@@ -1,0 +1,18 @@
+{
+  "peliculas": [
+    {
+      "titulo": "Cure (1997)",
+      "director": "Kiyoshi Kurosawa",
+      "poster": "https://posterspy.com/wp-content/uploads/2022/03/cure2022.png",
+      "sinopsis": "Un detective investiga una serie de asesinatos...",
+      "porque": "Una obra maestra del terror psicológico japonés..."
+    },
+    {
+      "titulo": "Sambizanga (1976)",
+      "director": "Sarah Maldoror",
+      "poster": "https://m.media-amazon.com/images/I/715FbnTGybL._AC_UF894,1000_QL80_.jpg",
+      "sinopsis": "Angola, años 60. Maria busca a su marido...",
+      "porque": "Un clásico del cine africano..."
+    }
+  ]
+}

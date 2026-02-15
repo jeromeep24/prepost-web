@@ -1,0 +1,54 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "archivo"
+    label: "Archivo (fanzines)"
+    folder: "data/archivo"
+    create: true
+    extension: json
+    fields:
+      - { label: "Número", name: "numero", widget: "string" }
+      - { label: "URL", name: "url", widget: "string" }
+
+  - name: "retuiteaciones"
+    label: "Retuiteaciones"
+    folder: "data/retuiteaciones"
+    create: true
+    extension: json
+    fields:
+      - { label: "Texto", name: "texto", widget: "text" }
+      - { label: "URL", name: "url", widget: "string" }
+
+  - name: "cineclub"
+    label: "Programación semanal"
+    folder: "data/cineclub"
+    create: true
+    extension: json
+    fields:
+      - { label: "Semana", name: "semana", widget: "string" }
+      - label: "Películas"
+        name: "peliculas"
+        widget: "list"
+        fields:
+          - { label: "Día", name: "dia", widget: "string" }
+          - { label: "Hora", name: "hora", widget: "string" }
+          - { label: "Título", name: "titulo", widget: "string" }
+          - { label: "Nota", name: "nota", widget: "string" }
+          - { label: "Enlace directo (para cuando toque)", name: "enlace", widget: "string", required: false }
+
+  - name: "peliculas-detalle"
+    label: "Detalle de películas"
+    folder: "data/peliculas-detalle"
+    create: true
+    extension: json
+    fields:
+      - { label: "Título", name: "titulo", widget: "string" }
+      - { label: "Director", name: "director", widget: "string" }
+      - { label: "URL del póster", name: "poster", widget: "string" }
+      - { label: "Sinopsis", name: "sinopsis", widget: "text" }
+      - { label: "Por qué", name: "porque", widget: "text" }

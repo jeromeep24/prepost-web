@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pre·post · fanzine y cineclub</title>
+    <style>
+        /* ===== ESTILOS (los mismos que tenías) ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #ffffff;
+            font-family: 'Cascadia Code', monospace;
+            color: #1a1a1a;
+            line-height: 1.5;
+            padding: 2rem 1rem;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .container { max-width: 900px; width: 100%; background: #ffffff; }
+        h1 {
+            font-size: 2.2rem; font-weight: 700; letter-spacing: -0.5px;
+            color: #1a1a1a; margin-bottom: 1.25rem;
+            border-bottom: 2px solid #d4d4d4; padding-bottom: 0.75rem;
+            text-decoration: underline;
+        }
+        .descripcion {
+            font-size: 1rem; background: #f2f2f2; padding: 1.25rem;
+            margin-bottom: 2.5rem; color: #1a1a1a;
+            border-left: 4px solid #00F229; font-style: italic;
+        }
+        .correo-sin-enlace { color: #1a1a1a; background: transparent; font-weight: 700; }
+        .tabs {
+            display: flex; gap: 0.25rem; margin-bottom: 2rem;
+            border-bottom: 2px solid #d4d4d4;
+        }
+        .tab-button {
+            background: none; border: none; font-family: inherit;
+            font-size: 1.1rem; font-weight: 700; padding: 0.6rem 1.2rem;
+            cursor: pointer; color: #5a5a5a; background: #f2f2f2;
+            border-top: 2px solid transparent; transition: all 0.1s;
+            margin-right: 2px; text-decoration: none;
+        }
+        .tab-button:hover { color: #000; background: #e0e0e0; text-decoration: underline; }
+        .tab-button.active {
+            color: #000; background: #ffffff; border-top: 2px solid #00F229;
+            font-weight: 700; text-decoration: underline;
+        }
+        .tab-content { display: none; padding: 1rem 0 2rem; }
+        .tab-content.active { display: block; }
+        h2 {
+            font-size: 1.8rem; font-weight: 700; margin-bottom: 1.5rem;
+            letter-spacing: -0.3px; border-bottom: 2px solid #d4d4d4;
+            padding-bottom: 0.5rem; text-decoration: underline;
+        }
+        .semana {
+            background: #f7f7f7; padding: 1.5rem; margin: 2rem 0;
+            border-left: 4px solid #00F229;
+        }
+        .semana h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 1.25rem; text-transform: uppercase; text-decoration: underline; }
+        .pelicula-item {
+            display: flex; align-items: baseline; gap: 0.75rem; flex-wrap: wrap;
+            padding: 0.5rem 0; border-bottom: 1px solid #d4d4d4;
+        }
+        .pelicula-item:last-child { border-bottom: none; }
+        .dia { font-weight: 700; min-width: 80px; color: #00F229; font-style: normal; }
+        .hora {
+            font-family: 'Cascadia Code', monospace; background: #1a1a1a;
+            color: #ffffff; padding: 0.15rem 0.5rem; font-weight: 700;
+        }
+        .titulo { font-weight: 700; font-size: 1.1rem; text-decoration: underline; }
+        .online {
+            font-size: 0.85rem; background: #eaeaea; padding: 0.15rem 0.5rem;
+            margin-left: auto; font-style: italic;
+        }
+        .online-link {
+            font-size: 0.85rem; background: #eaeaea; padding: 0.15rem 0.5rem;
+            margin-left: auto; font-style: italic; color: #1a1a1a;
+            text-decoration: underline; display: inline-block;
+        }
+        .online-link:hover { background: #00F229; color: #000; }
+        .nota {
+            font-style: italic; background: #f2f2f2; padding: 0.2rem 0.5rem;
+            color: #4a4a4a; border: 1px solid #d4d4d4;
+        }
+        .peliculas-detalle { margin-top: 3rem; }
+        .pelicula-detalle {
+            display: flex; gap: 2rem; margin-bottom: 2.5rem; background: #f9f9f9;
+            padding: 1.5rem; border-left: 4px solid #00F229;
+        }
+        .poster {
+            flex: 0 0 120px; height: 160px; background: #e0e0e0;
+            display: flex; align-items: center; justify-content: center;
+            color: #4a4a4a; font-size: 0.8rem; border: 1px solid #c0c0c0;
+        }
+        .poster img { max-width: 100%; max-height: 100%; object-fit: cover; }
+        .sinopsis { flex: 1; }
+        .sinopsis h4 { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.75rem; text-decoration: underline; }
+        .sinopsis p { margin-bottom: 1rem; color: #1a1a1a; }
+        .porque {
+            font-size: 0.95rem; background: #f2f2f2; padding: 0.75rem;
+            border-left: 2px solid #00F229; font-style: italic;
+        }
+        .archivo-lista { background: #f7f7f7; padding: 1.5rem; }
+        .archivo-item {
+            display: block; padding: 0.75rem 1rem; margin-bottom: 0.5rem;
+            background: #ffffff; border-left: 4px solid #d4d4d4;
+            color: #1a1a1a; text-decoration: none; font-weight: 700;
+            transition: border 0.1s;
+        }
+        .archivo-item:hover {
+            border-left-color: #00F229; background: #f2f2f2; text-decoration: underline;
+        }
+        .archivo-item span { color: #00F229; font-weight: 700; margin-right: 1rem; }
+        .retuit-lista { background: #f7f7f7; padding: 1.5rem; }
+        .retuit-item {
+            padding: 1rem; margin-bottom: 1rem; background: #ffffff;
+            border-left: 4px solid #d4d4d4; font-size: 0.95rem;
+        }
+        .retuit-item a {
+            color: #1a1a1a; text-decoration: underline; font-style: normal;
+            display: inline-block; width: 100%;
+        }
+        .retuit-item a:hover { background: #00F229; color: #000; text-decoration: underline; }
+        .info-box { background: #f7f7f7; padding: 2rem; border-left: 4px solid #00F229; }
+        .info-box p { margin-bottom: 1rem; }
+        footer {
+            margin-top: 3rem; font-size: 0.85rem; color: #5a5a5a;
+            border-top: 2px solid #d4d4d4; padding-top: 1.5rem; text-align: center;
+        }
+        a { color: inherit; text-decoration: none; }
+        @media screen and (max-width: 600px) {
+            body { font-size: 16px; } h1 { font-size: 1.8rem; } h2 { font-size: 1.5rem; }
+            .tabs { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; gap: 0; padding-bottom: 0.5rem; scrollbar-width: none; -ms-overflow-style: none; }
+            .tabs::-webkit-scrollbar { display: none; }
+            .tab-button { flex: 0 0 auto; padding: 0.6rem 1rem; font-size: 1rem; margin-right: 2px; }
+            .pelicula-detalle { flex-direction: column; gap: 1rem; }
+            .poster { flex: 0 0 auto; width: 100%; max-width: 200px; margin: 0 auto; }
+            .archivo-item { font-size: 0.85rem; word-break: break-word; }
+            .retuit-item a { font-size: 0.9rem; }
+        }
+        @media screen and (max-width: 400px) {
+            .tab-button { padding: 0.5rem 0.8rem; font-size: 0.9rem; }
+            .pelicula-item { font-size: 0.9rem; gap: 0.25rem; }
+            .dia { min-width: 60px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>pre·post</h1>
+
+        <div class="descripcion">
+            Somos un proyecto de fanzine gratuito sobre arte y cultura. Nos puedes leer por aquí o en físico. Buscamos siempre colaboradores, así que escríbenos por correo (prepostfanzine@gmail.com) o por Insta (@prepost.fanzine). ¡Y ahora con cineclub!
+        </div>
+
+        <div class="tabs">
+            <button class="tab-button active" data-tab="archivo">ARCHIVO</button>
+            <button class="tab-button" data-tab="cineclub">CINECLUB</button>
+            <button class="tab-button" data-tab="retuiteaciones">RETUITEACIONES</button>
+            <button class="tab-button" data-tab="info">INFO</button>
+        </div>
+
+        <!-- ARCHIVO (vacío, se llenará con JavaScript) -->
+        <div id="archivo" class="tab-content active">
+            <h2>ARCHIVO</h2>
+            <div class="archivo-lista" id="archivo-lista"></div>
+        </div>
+
+        <!-- CINECLUB -->
+        <div id="cineclub" class="tab-content">
+            <h2>CINECLUB</h2>
+            <div style="background: #f2f2f2; padding: 1.25rem; margin-bottom: 2rem; border-left: 4px solid #00F229; font-style: italic;">
+                Cineclub de esquina. Abierto a todos. Si quieres programar cosas, escribe a prepostfanzine@gmail.com y gestionamos.
+            </div>
+
+            <div class="semana" id="programacion-semana"></div>
+
+            <div class="peliculas-detalle">
+                <h3 style="font-size: 1.5rem; margin-bottom: 1.5rem; font-weight: 700; text-decoration: underline;">SOBRE LAS PELÍCULAS</h3>
+                <div id="peliculas-list"></div>
+            </div>
+
+            <div style="margin-top: 3rem;">
+                <h2 style="font-size: 1.8rem; font-weight: 700; margin-bottom: 1.5rem; border-bottom: 2px solid #d4d4d4; padding-bottom: 0.5rem; text-decoration: underline;">SOBRE EL CINECLUB</h2>
+                <div class="info-box">
+                    <p><strong>¿Qué es esto?</strong> Un cineclub de barrio pero online. Nos juntamos los martes y domingos a las 22.00h a ver pelis que no siempre están en el circuito comercial. Después de cada proyección, coloquio virtual (el que quiera se queda).</p>
+                    <p><strong>¿Cuánto cuesta?</strong> Nada. Es autogestionado y sin ánimo de lucro.</p>
+                    <p><strong>¿Cómo me conecto?</strong> El mismo día de la proyección publicaremos el enlace en esta web (en Programación). Solo tienes que hacer clic y verás la peli en el navegador.</p>
+                    <p><strong>¿Quieres programar algo?</strong> Escribe a <span class="correo-sin-enlace">prepostfanzine@gmail.com</span> con tu propuesta y la gestionamos entre todes.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- RETUITEACIONES (vacío) -->
+        <div id="retuiteaciones" class="tab-content">
+            <h2>RETUITEACIONES</h2>
+            <div class="retuit-lista" id="retuit-lista"></div>
+        </div>
+
+        <!-- INFO (fijo) -->
+        <div id="info" class="tab-content">
+            <h2>INFO · FANZINE</h2>
+            <div class="info-box">
+                <p><strong>¿Qué es pre·post?</strong> Un fanzine gratuito de arte y cultura. Publicamos en papel, pero los PDF gratis que no falten.</p>
+                <p><strong>¿Cada cuánto sale?</strong> Sale cuando lo tenemos acabado (por ahora suelen ser varios meses). Lo anunciamos por Instagram.</p>
+                <p><strong>¿Cómo puedo colaborar?</strong> Escríbenos a prepostfanzine@gmail.com con ideas, textos, ilustraciones, lo que sea. No hay reglas fijas, solo ganas de hacer.</p>
+                <p><strong>¿Dónde consigo el fanzine en físico?</strong> Principalmente en ferias y eventos de fanzines y autoedición de Zaragoza. Si te hace ilu, podemos quedar o te lo enviamos a donde sea.</p>
+                <p><strong>¿Y el cineclub?</strong> Es una rama más del proyecto. Puedes ver la programación en la pestaña CINECLUB. También está abierto a propuestas.</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>prepost · fanzine de arte y cultura</p>
+            <p>prepostfanzine@gmail.com · @prepost.fanzine</p>
+        </footer>
+    </div>
+
+    <!-- Script para pestañas -->
+    <script>
+        (function() {
+            const buttons = document.querySelectorAll('.tab-button');
+            const contents = document.querySelectorAll('.tab-content');
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    buttons.forEach(btn => btn.classList.remove('active'));
+                    contents.forEach(content => content.classList.remove('active'));
+                    button.classList.add('active');
+                    const tabId = button.getAttribute('data-tab');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+        })();
+    </script>
+
+    <!-- Script para cargar datos desde los JSON -->
+    <script>
+        function loadJSON(path, callback) {
+            fetch(path)
+                .then(response => response.json())
+                .then(data => callback(data))
+                .catch(error => console.error('Error cargando ' + path, error));
+        }
+
+        // Cargar ARCHIVO
+        loadJSON('data/archivo/archivo.json', function(data) {
+            const container = document.getElementById('archivo-lista');
+            if (!container) return;
+            container.innerHTML = '';
+            data.items.forEach(item => {
+                const a = document.createElement('a');
+                a.href = item.url;
+                a.className = 'archivo-item';
+                a.target = '_blank';
+                a.innerHTML = `<span>${item.numero}</span> → ${item.url}`;
+                container.appendChild(a);
+            });
+            const p = document.createElement('p');
+            p.style = "margin-top: 1.5rem; color: #4a4a4a; padding-left: 0.5rem;";
+            p.textContent = "Más números pronto. Si quieres colaborar, escríbenos.";
+            container.appendChild(p);
+        });
+
+        // Cargar RETUITEACIONES
+        loadJSON('data/retuiteaciones/retuiteaciones.json', function(data) {
+            const container = document.getElementById('retuit-lista');
+            if (!container) return;
+            container.innerHTML = '';
+            data.items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'retuit-item';
+                const a = document.createElement('a');
+                a.href = item.url;
+                a.target = '_blank';
+                a.innerHTML = item.texto;
+                div.appendChild(a);
+                container.appendChild(div);
+            });
+        });
+
+        // Cargar programación
+        loadJSON('data/cineclub/cineclub.json', function(data) {
+            const container = document.getElementById('programacion-semana');
+            if (!container) return;
+            container.innerHTML = `<h3>${data.semana}</h3>`;
+            data.peliculas.forEach(peli => {
+                const div = document.createElement('div');
+                div.className = 'pelicula-item';
+                const onlineHTML = peli.enlace 
+                    ? `<a href="${peli.enlace}" class="online-link" target="_blank">Online</a>` 
+                    : `<span class="online">Online</span>`;
+                div.innerHTML = `
+                    <span class="dia">${peli.dia}</span>
+                    <span class="hora">${peli.hora}</span>
+                    <span class="titulo">${peli.titulo}</span>
+                    ${onlineHTML}
+                    <span class="nota">${peli.nota}</span>
+                `;
+                container.appendChild(div);
+            });
+        });
+
+        // Cargar detalles de películas
+        loadJSON('data/peliculas-detalle/peliculas-detalle.json', function(data) {
+            const container = document.getElementById('peliculas-list');
+            if (!container) return;
+            container.innerHTML = '';
+            data.peliculas.forEach(peli => {
+                const div = document.createElement('div');
+                div.className = 'pelicula-detalle';
+                div.innerHTML = `
+                    <div class="poster"><img src="${peli.poster}" alt="Póster" style="width:100%; height:auto;"></div>
+                    <div class="sinopsis">
+                        <h4>${peli.titulo} · ${peli.director}</h4>
+                        <p><strong>Sinopsis:</strong> ${peli.sinopsis}</p>
+                        <div class="porque"><strong>Por qué la ponemos:</strong> ${peli.porque}</div>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        });
+    </script>
+    <!-- Widget de identidad para Netlify -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+</body>
+</html>
